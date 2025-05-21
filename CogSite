@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THCognitive Email Signup</title>
+  <script>
+    async function submitEmail(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyyOrIbtdzyg506T3-WoTgnSUfm1-HCpG4oeiDv_8pb8MpIQQ8WWE2DhGMlnFs4DZLMBA/exec", {
+        method: "POST",
+        body: new URLSearchParams({ email }),
+      });
+      if (response.ok) {
+        document.getElementById("status").innerText = "Thanks! You're on the list.";
+        document.getElementById("email").value = "";
+      } else {
+        document.getElementById("status").innerText = "Something went wrong. Try again.";
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white min-h-screen flex items-center justify-center px-4">
+  <div class="max-w-md w-full text-center">
+    <h1 class="text-3xl font-semibold mb-4">Join THCognitive</h1>
+    <p class="mb-6 text-gray-400">
+      Get early updates, insights, and behind-the-scenes from THCognitive—
+      exploring the mind, performance, and high-level creative systems.
+    </p>
+    <form onsubmit="submitEmail(event)" class="flex flex-col gap-3">
+      <input
+        id="email"
+        type="email"
+        required
+        placeholder="Your email"
+        class="bg-gray-900 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button
+        type="submit"
+        class="bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-md font-medium"
+      >
+        Join the List
+      </button>
+      <div id="status" class="text-sm mt-2 text-green-400"></div>
+    </form>
+  </div>
+</body>
+</html>
+
