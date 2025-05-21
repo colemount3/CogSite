@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>THCognitive Email Signup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     async function submitEmail(e) {
       e.preventDefault();
@@ -12,49 +13,46 @@
         method: "POST",
         body: new URLSearchParams({ email }),
       });
+      const status = document.getElementById("status");
       if (response.ok) {
-        document.getElementById("status").innerText = "Thanks! You're on the list.";
+        status.innerText = "Thanks! You're on the list.";
+        status.className = "text-green-400 mt-2";
         document.getElementById("email").value = "";
       } else {
-        document.getElementById("status").innerText = "Something went wrong. Try again.";
+        status.innerText = "Something went wrong. Try again.";
+        status.className = "text-red-400 mt-2";
       }
     }
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-black text-white min-h-screen flex items-center justify-center px-4">
-  <div class="max-w-md w-full text-center">
-    <h1 class="text-3xl font-semibold mb-4">Join THCognitive</h1>
+<body class="bg-black text-white min-h-screen flex items-center justify-center px-4 py-12">
+  <div class="w-full max-w-lg bg-[#111111] rounded-2xl shadow-2xl p-8">
+    <h1 class="text-4xl font-semibold text-center mb-6">Join THCognitive</h1>
 
-    <p class="mb-4 text-gray-400">
-      THCognitive is a prototype THC sobriety testing tool designed to help inform
-      fairer cannabis policy and promote safe use. Unlike alcohol, THC currently
-      lacks reliable methods to determine active impairment. This app evaluates
-      motor skills, reaction time, and cognitive function to better understand
-      real-time effects—especially in safety-sensitive settings. Your participation
-      supports meaningful research and smarter legalization.
+    <p class="text-gray-400 text-sm mb-4 text-center">
+      THCognitive is a prototype THC sobriety testing tool designed to help inform fairer cannabis policy and promote safe use. 
+      It evaluates motor skills, reaction time, and cognitive function to better understand real-time impairment.
     </p>
 
-    <p class="mb-6 text-gray-400">
-      Get early updates, insights, and behind-the-scenes from THCognitive—
-      exploring the mind, performance, and high-level creative systems.
+    <p class="text-gray-400 text-sm mb-6 text-center">
+      Sign up for early updates, insights, and behind-the-scenes content as we shape the future of responsible cannabis use.
     </p>
 
-    <form onsubmit="submitEmail(event)" class="flex flex-col gap-3">
+    <form onsubmit="submitEmail(event)" class="flex flex-col gap-4">
       <input
         id="email"
         type="email"
         required
         placeholder="Your email"
-        class="bg-gray-900 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="bg-gray-900 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
       />
       <button
         type="submit"
-        class="bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-md font-medium"
+        class="bg-blue-600 hover:bg-blue-700 transition-all px-4 py-3 rounded-lg font-medium text-white"
       >
         Join the List
       </button>
-      <div id="status" class="text-sm mt-2 text-green-400"></div>
+      <div id="status" class="text-sm text-center"></div>
     </form>
   </div>
 </body>
