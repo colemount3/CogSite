@@ -5,22 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>THCognitive Email Signup</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Spinner styles */
+    #loadingSpinner {
+      display: none;
+      margin: 0 auto;
+      border: 4px solid #f3f3f3; /* Light gray */
+      border-top: 4px solid #3b82f6; /* Blue */
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
   <script>
     async function submitEmail(e) {
       e.preventDefault();
-      const email = document.getElementById("email").value;
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyowx7gpzx9RO3ZzoOU56fEAnUypGt0gA4S3GoSTiruf3TbAV8uWPwfeH_qhDh8_r5Qmg/exec", {
-        method: "POST",
-        body: new URLSearchParams({ email }),
-      });
+      const emailInput = document.getElementById("email");
+      const email = emailInput.value;
       const status = document.getElementById("status");
-      if (response.ok) {
-        status.innerText = "Thanks! You're on the list.";
-        status.className = "text-green-400 mt-2";
-        document.getElementById("email").value = "";
-      } else {
-        status.innerText = "Something went wrong. Try again.";
-        status.className = "text-red-400 mt-2";
+      const spinner = document.getElementById("loadingSpinner");
+      const submitButton = document.getElementById("submitButton");
+
+      // Show spinner and disable button
+      spinner.style.display = "block";
+      submitButton.disabled = true;
+      status.innerText = "";
+      status.className = "text-sm text-center";
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwKkQpeXwsa1vzbYHWoKg_VKT2Yh1n68RqwJx9N4--2UF7Zp1FzayheVluajiDep6Rxyg/exec", {
+          method: "POST",
+          body: new URLSearchParams({ email }),
+        });
+
+        if (response.ok) {
+          status.innerText = "Thanks! You're on the list.";
+          status.className = "text-green-400 mt-2 text-center";
+          emailInput.value = "";
+        } else {
+          status.innerText = "Something went wrong. Try again.";
+          status.className = "text-red-400 mt-2 text-center";
+        }
+      } catch (error) {
+        status.innerText = "Network error. Please try again.";
+        status.className = "text-red-400 mt-2 text-center";
+      } finally {
+        // Hide spinner and enable button
+        spinner.style.display = "none";
+        submitButton.disabled = false;
       }
     }
   </script>
@@ -47,10 +85,12 @@
         class="bg-gray-900 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
       />
       <button
+        id="submitButton"
         type="submit"
-        class="bg-blue-600 hover:bg-blue-700 transition-all px-4 py-3 rounded-lg font-medium text-white"
+        class="bg-blue-600 hover:bg-blue-700 transition-all px-4 py-3 rounded-lg font-medium text-white flex justify-center items-center gap-2"
       >
         Join the List
+        <div id="loadingSpinner"></div>
       </button>
       <div id="status" class="text-sm text-center"></div>
     </form>
