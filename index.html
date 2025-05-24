@@ -9,7 +9,7 @@
     async function submitEmail(e) {
       e.preventDefault();
       const email = document.getElementById("email").value;
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyyOrIbtdzyg506T3-WoTgnSUfm1-HCpG4oeiDv_8pb8MpIQQ8WWE2DhGMlnFs4DZLMBA/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyowx7gpzx9RO3ZzoOU56fEAnUypGt0gA4S3GoSTiruf3TbAV8uWPwfeH_qhDh8_r5Qmg/exec", {
         method: "POST",
         body: new URLSearchParams({ email }),
       });
